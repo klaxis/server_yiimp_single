@@ -42,7 +42,12 @@ sudo cp -r nginx_confs/security.conf /etc/nginx/yiimp.server
 sudo cp -r nginx_confs/letsencrypt.conf /etc/nginx/yiimp.server
 
 # Removing default nginx site configs.
-sudo rm -r /etc/nginx/conf.d/default.conf
+if [ -e /etc/nginx/conf.d/default.conf]; then
+  sudo rm -f -- /etc/nginx/conf.d/default.conf
+  echo "Removed: /etc/nginx/conf.d/default.conf"
+else
+  echo "Skip: /etc/nginx/sites-enabled/default.conf (not found)"
+fi
 
  
 if [ -e /etc/nginx/sites-available/default.conf ]; then
