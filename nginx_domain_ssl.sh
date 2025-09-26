@@ -39,29 +39,7 @@ sudo mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
 NGINX_CONF=/etc/nginx/nginx.conf
 INCLUDE_LINE='include /etc/nginx/sites-enabled/*;'
 
-# 1) Check if the include is already ACTIVE (ignore commented lines)
-if awk '
-  BEGIN {found=0}
-  /^[[:space:]]*#/ {next}                               # skip comments
-  /^[[:space:]]*include[[:space:]]+\/etc\/nginx\/sites-enabled\/\*;[[:space:]]*$/ {found=1}
-  END {exit !found}                                      # exit 0 if found, 1 if not
-' "$NGINX_CONF"; then
-  echo "Skip: $INCLUDE_LINE already present."
-else
-  echo "Adding: $INCLUDE_LINE to http { } in $NGINX_CONF"
 
-  # 2) Insert exactly once, right after the first 'http {' line
-  sudo awk -v inc="$INCLUDE_LINE" '
-    BEGIN {added=0}
-    /http[[:space:]]*\{/ && !added {
-      print;                      # print the 'http {' line
-      print "    " inc;           # insert include line (indented)
-      added=1; next
-    }
-    {print}
-  ' "$NGINX_CONF" | sudo tee "${NGINX_CONF}.new" >/dev/null && \
-  sudo mv "${NGINX_CONF}.new" "$NGINX_CONF"
-fi
 
 
 sudo rm /etc/nginx/sites-available/${DomainName}.conf
