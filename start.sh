@@ -84,7 +84,7 @@ fi
 
 echo
 echo "-----------------------------------------------"
-echo
+echo                  v2.0.1
 echo Thank you for using the Dirty Harry YiiMP Server Installer!
 echo
 echo To run this installer anytime simply type, yiimpserver!
