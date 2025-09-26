@@ -60,12 +60,12 @@ echo -e "$GREEN Done...$COL_RESET"
 # MariaDB
 echo -e " Installing MariaDB Repository...$COL_RESET"
 
-if [[ ("$DISTRO" == "16") ]]; then
-  hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-  sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.one.com/mariadb/repo/10.4/ubuntu xenial main' >/dev/null 2>&1
-else  
+#if [[ ("$DISTRO" == "16") ]]; then
+#  hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+#  sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.one.com/mariadb/repo/10.4/ubuntu xenial main' >/dev/null 2>&1
+#else  
   apt_install install mariadb-server -y >/dev/null 2>&1
-fi
+#fi
 echo -e "$GREEN Done...$COL_RESET"
 
 # Upgrade System Files
